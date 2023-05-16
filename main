@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+require "#{File.dirname(File.realpath(__FILE__))}/app/app.rb"
+require 'logger'
+
+LOGGER = Logger.new(STDOUT)
+LOGGER.level = Logger::INFO
+## Main
+def main
+
+  ## DO STUFF HERE
+  LOGGER.info "Starting application..."
+
+  tic_tac_toe = Game.new
+  tic_tac_toe.start_game
+
+  LOGGER.info "ALL DONE!"
+end
+
+## Main Excecution
+main

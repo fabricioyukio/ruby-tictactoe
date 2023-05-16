@@ -1,8 +1,8 @@
-require './modules.rb'
+# require './modules.rb'
 
 # Implements the difficulty levels
 class Difficulty
-  include TicTacToeCommons
+  include TicTacToe::Commons
 
   attr_accessor :level
   @level = "Medium"
@@ -73,7 +73,9 @@ end
 # survey for the first available spot
 class EasyDifficulty < MediumDifficulty
   @level = "Easy"
-  # TODO: implement for Easy Difficulty
+
+  # It just takes the first available spot,
+  # from left to right, top to bottom
   def get_best_move(board, depth = 0, best_score = {})
     available_spaces = get_available_spaces(board)
     return available_spaces[0].to_i - 1
@@ -82,8 +84,38 @@ end
 
 # Represents the difficulty level Hard
 # The machine tries to get the best move
-
 class HardDifficulty < MediumDifficulty
   @level = "Hard"
   # TODO: implement for Hard Difficulty
+  def get_best_move(board, depth = 0, best_score = {})
+    available_spaces = get_available_spaces(board)
+    best_move = nil
+
+    available_spaces.each do |as|
+      spot = as.to_i - 1
+      board[spot] = @my_symbol
+      if game_is_over?(board)
+        # if with that move, the computer wins,
+        # or forces a Tie, return that move
+        # I either win or force a tie with this move, so I'll take it!
+        return spot
+      else
+        board[spot] = @adversary_symbol
+        if game_is_over?(board)
+          # if with that move, the adversary wins, return that move
+          # Computer doesn't want the adversary to win
+          # Adversary wins with this move, so I'll take it!
+          return spot
+        else
+          # if no one wins, lets try next move...
+          board[spot] = as
+        end
+      end
+    end
+
+    # if no move wins, return a random move
+    n = rand(0..available_spaces.count)
+    # I decided to take #{available_spaces[n]} randomly!
+    return available_spaces[n].to_i - 1
+  end
 end

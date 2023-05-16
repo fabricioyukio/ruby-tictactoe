@@ -1,10 +1,10 @@
 require 'io/console'
-require './players.rb'
-require './modules.rb'
+require "#{File.dirname(File.realpath(__FILE__))}/players.rb"
+
 
 class Game
 
-  include TicTacToeCommons
+  include TicTacToe::Commons
 
   def initialize
     @board = Array((1...10))
@@ -27,11 +27,10 @@ class Game
     game_on
 
     draw_board(@board)
-    outcome
-    puts "\n\n"
-    puts "+===========+"
-    puts "| Game over |"
-    puts "+===========+\n\n"
+
+    reveal_outcome
+    draw_game_over
+
     puts "\n\nPress [1] for review, any other key to exit."
     choice = gets.chomp.to_i
     if choice == 1
@@ -39,7 +38,7 @@ class Game
     end
   end
 
-  # runs the game
+  # loops the game
   def game_on
     until game_is_over?(@board)
       @turn += 1
@@ -68,6 +67,14 @@ class Game
     end
   end
 
+  def draw_game_over
+    puts "\n\n"
+    puts "+===========+"
+    puts "| Game over |"
+    puts "+===========+"
+    puts "\n\n"
+  end
+
   def player_select
     puts "**| Player Selection }**\n"
     for i in 0..1
@@ -91,7 +98,7 @@ class Game
     @moves << { symbol: player.symbol, spot: spot, player: player.player_number }
   end
 
-  def outcome
+  def reveal_outcome
     if tie?(@board)
       puts "It's a tie!"
     else
@@ -112,15 +119,13 @@ class Game
     @turn = 0
     draw_board(review_board)
     @moves.each do |move|
+      sleep(1) # wait a second before showing the next move
       @turn += 1
       puts "\n\n"
       review_board[move[:spot]] = move[:symbol]
       draw_board(review_board)
+      puts "Player #{move[:player]} turn:"
       puts "#{move[:symbol]} at #{move[:spot]+1}."
-      sleep(1)
     end
   end
 end
-
-game = Game.new
-game.start_game

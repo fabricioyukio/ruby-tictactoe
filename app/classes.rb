@@ -1,0 +1,1 @@
+require "#{File.dirname(File.realpath(__FILE__))}/classes/game.rb"

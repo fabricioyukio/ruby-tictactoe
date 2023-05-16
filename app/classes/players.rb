@@ -1,9 +1,8 @@
 require 'io/console'
-require './modules.rb'
-require './difficulty.rb'
+require "#{File.dirname(File.realpath(__FILE__))}/difficulty.rb"
 
 class Player
-  include TicTacToeCommons
+  include TicTacToe::Commons
   attr_accessor :kind, :symbol, :player_number
   def initialize(kind, symbol, player_number)
     @kind = kind
