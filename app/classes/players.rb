@@ -69,7 +69,7 @@ class ComputerPlayer < Player
   def get_best_spot(board)
     # the expertise class is responsible for
     # evaluating the board and returning the best spot
-    @expertise.get_best_move(board, @symbol)
+    @expertise.get_best_move(board, @player_number)
 
   end
 
@@ -86,7 +86,8 @@ class ComputerPlayer < Player
 
       if selection.between?(1,difficulties.length)
         difficulty = difficulties[selection - 1] + "Difficulty"
-        puts "Difficulty level set to #{difficulty}!"
+        puts "Difficulty level for Player #{@player_number} is set to #{difficulties[selection - 1]}!"
+        puts "\nGood luck!\n\n" if difficulties[selection - 1] == "Hard"
         puts "Press any key to continue..."
         STDIN.getch
         puts "\n\n"
