@@ -6,14 +6,13 @@ LOGGER = Logger.new(STDOUT)
 LOGGER.level = Logger::INFO
 ## Main
 def main
-
-  ## DO STUFF HERE
   LOGGER.info "Starting application..."
 
-  tic_tac_toe = Game.new
+  ## DOING STUFF HERE
+  tic_tac_toe = TicTacToeGame.new
   tic_tac_toe.start_game
 
-  LOGGER.info "ALL DONE!"
+  LOGGER.info "Applications ended.\nALL DONE!"
 end
 
 ## Main Excecution

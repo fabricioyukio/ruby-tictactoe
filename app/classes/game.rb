@@ -2,7 +2,7 @@ require 'io/console'
 require "#{File.dirname(File.realpath(__FILE__))}/players.rb"
 
 
-class Game
+class TicTacToeGame
 
   include TicTacToe::Commons
 
@@ -20,7 +20,7 @@ class Game
     puts "Welcome to Tic Tac Toe Game!!"
     puts "Starting a new game...\n\n"
     player_select
-    puts "All set! Let's start the game!\n\n"
+    puts "All set!\nLet's start the game!\n\n"
     puts "Press any key to continue..."
     STDIN.getch # wait just a delay for the user to read the messages
 
@@ -77,6 +77,7 @@ class Game
 
   def player_select
     puts "**| Player Selection }**\n"
+
     for i in 0..1
       until @players[i]
         puts "Select Player #{(i+1)}:\n[1] for Human\n[2] for Computer"
@@ -90,6 +91,7 @@ class Game
         end
       end
     end
+
     puts "Player 1: using #{@players[0].symbol} (#{@players[0].kind})"
     puts "Player 2: using #{@players[1].symbol} (#{@players[1].kind})"
   end
