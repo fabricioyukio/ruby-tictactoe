@@ -7,12 +7,15 @@ module TicTacToeCommons
   end
 
   def wins?(board)
+    # columns
     [board[0], board[1], board[2]].uniq.length == 1 ||
     [board[3], board[4], board[5]].uniq.length == 1 ||
     [board[6], board[7], board[8]].uniq.length == 1 ||
+    # rows
     [board[0], board[3], board[6]].uniq.length == 1 ||
     [board[1], board[4], board[7]].uniq.length == 1 ||
     [board[2], board[5], board[8]].uniq.length == 1 ||
+    # diagonals
     [board[0], board[4], board[8]].uniq.length == 1 ||
     [board[2], board[4], board[6]].uniq.length == 1
   end

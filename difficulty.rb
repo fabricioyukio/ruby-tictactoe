@@ -1,5 +1,6 @@
 require './modules.rb'
 
+# Implements the difficulty levels
 class Difficulty
   include TicTacToeCommons
 
@@ -13,6 +14,7 @@ class Difficulty
     @adversary_symbol = @my_symbol == TTT_SYMBOLS[0] ? TTT_SYMBOLS[1] : TTT_SYMBOLS[0]
   end
 
+  # the method that will be called by the game
   def get_best_move(board, depth = 0); raise MethodMissingError; end
 
   def get_available_spaces(board)
@@ -27,6 +29,9 @@ class Difficulty
 
 end
 
+# Represents the difficulty level Medium
+# The machine tries to at each move, survey for EITHER
+# a winning move, or a move that forces a tie
 class MediumDifficulty < Difficulty
   @level = "Medium"
 
@@ -40,14 +45,14 @@ class MediumDifficulty < Difficulty
       if game_is_over?(board)
         # if with that move, the computer wins,
         # or forces a Tie, return that move
-        puts "I either win or force a tie with #{spot + 1}! So I'll take it!"
+        # I either win or force a tie with this move, so I'll take it!
         return spot
       else
         board[spot] = @adversary_symbol
         if game_is_over?(board)
           # if with that move, the adversary wins, return that move
           # Computer doesn't want the adversary to win
-          puts "Adversary wins with #{spot + 1}! So I'll take it!"
+          # Adversary wins with this move, so I'll take it!
           return spot
         else
           # if no one wins, lets try next move...
@@ -58,15 +63,25 @@ class MediumDifficulty < Difficulty
 
     # if no move wins, return a random move
     n = rand(0..available_spaces.count)
-    puts "I decided to take #{available_spaces[n]} randomly!"
+    # I decided to take #{available_spaces[n]} randomly!
     return available_spaces[n].to_i - 1
   end
 end
 
+# Represents the difficulty level Easy
+# The machine tries to at each move, just to
+# survey for the first available spot
 class EasyDifficulty < MediumDifficulty
   @level = "Easy"
   # TODO: implement for Easy Difficulty
+  def get_best_move(board, depth = 0, best_score = {})
+    available_spaces = get_available_spaces(board)
+    return available_spaces[0].to_i - 1
+  end
 end
+
+# Represents the difficulty level Hard
+# The machine tries to get the best move
 
 class HardDifficulty < MediumDifficulty
   @level = "Hard"
